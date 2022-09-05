@@ -56,19 +56,6 @@ const EmailJoiSchema = Joi.object({
     sendName: Joi.string().required().$.min(4).max(80).rule({ message: '发信名称长度最小为4并且不能超过80长度' })
 });
 
-// var g = EmailJoiSchema.validate({
-//     host: 'asasa',
-//     author: {
-//         user: '88888',
-//         password: 'wewewewe'
-//     },
-//     port: '88',
-//     sendName:'89'
-// });
-
-// console.log(g);
-
-
 module.exports = {
     Email,
     EmailJoiSchema

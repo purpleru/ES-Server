@@ -15,7 +15,7 @@ app.use(expressSession({
 }));
 app.use(express.urlencoded({ extended: false }));
 
-app.use(require('./route/index'));
+app.use(require('./routes/index'));
 
 app.listen(3000, function (err) {
 

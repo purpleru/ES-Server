@@ -9,7 +9,7 @@ const dataJoi = Joi.object({
     content: Joi.string().required().min(4).max(3000)
 });
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
     const { key } = req.params;
 
     const { title, content } = req.body;
@@ -30,7 +30,7 @@ module.exports = async function (req, res) {
     Commit.findById(key).populate(['user', 'email']).exec(async function (err, result) {
 
         if (err) {
-            return res.end();
+            return next(err);
         } else if (!result) {
             return res.json({
                 code: 400,
@@ -38,7 +38,7 @@ module.exports = async function (req, res) {
             });
         }
 
-        const { email, addressee, snedName } = result;
+        const { email, addressee, sendName } = result;
 
         const transporter = nodemailer.createTransport({
             host: email.host,
@@ -50,7 +50,7 @@ module.exports = async function (req, res) {
             }
         });
 
-        const from = `"${snedName}" <${email.author.user}>`;
+        const from = `"${sendName}" <${email.author.user}>`;
 
         transporter.sendMail({
             from: from, // sender address

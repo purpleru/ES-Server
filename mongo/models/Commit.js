@@ -1,32 +1,51 @@
 const { Schema, model } = require('mongoose');
+const Joi = require('joi');
+
+const emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 
 const commitSchema = new Schema({
     title: {
-        type: String
+        type: String,
+        minlength: 4,
+        maxlength: 150,
+        required: true
     },
     email: {
         type: Schema.Types.ObjectId,
-        ref: 'Email'
+        ref: 'Email',
+        required: true
     },
-    snedName: String,
+    sendName: {
+        type: String,
+        minlength: 2,
+        maxlength: 80
+    },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    addressee: String
+    addressee: {
+        type: String,
+        validate: {
+            validator(val) {
+                return emailReg.test(val);
+            },
+            message: 'addressee不符合验证规则'
+        },
+        required: true
+    }
 });
 
 const Commit = model('Commit', commitSchema);
 
-// Commit.create({
-//     title: '测试一下',
-//     addressee: '3072953029@qq.com',
-//     snedName: 'EmailService',
-//     user: '630a1314c759065e54b4db8e',
-//     email: '630864eea3299308e8171852'
-// })
-
+const CommitJoiSchema = Joi.object({
+    title: Joi.string().required().min(4).max(150),
+    addressee: Joi.string().required().regex(emailReg).min(6).error(new Error('收信地址不符合验证规则')),
+    sendName: Joi.string().required().min(2).max(80)
+});
 module.exports = {
-    Commit
+    Commit,
+    CommitJoiSchema
 };
 

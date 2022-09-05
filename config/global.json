@@ -1,3 +1,7 @@
 {
-    "secret":"ZHANGZIRU123456"
+    "secret":"ZHANGZIRU123456",
+    "validateService":{
+        "title":"这是一封来自EmailService服务系统发送的测试邮件！",
+        "content":"您好，当你看到这件信封的时候，证明你添加的邮箱服务是可用的，现在你只需要点击继续添加即可以完成添加邮箱服务！"
+    }
 }
