@@ -1,22 +1,28 @@
 const { User } = require('../../mongo/models/User');
-
-module.exports = function (req, res, next) {
+const { Commit } = require('../../mongo/models/Commit');
+const { Email } = require('../../mongo/models/Email');
+module.exports = async function (req, res, next) {
 
     const { user: userInfo } = req.session;
     // console.log(userInfo);
-
-    User.findById(userInfo._id, '-password').exec(function (err, doc) {
-        if (err) {
-            return res.json({
-                code: 500,
-                msg: err.message || '获取信息失败!'
-            });
-        }
-
-        res.json({
-            code: 200,
-            msg: '获取信息成功!',
-            user: doc.toObject()
+    try {
+        var info = await User.findById(userInfo._id, '-password');
+        var userCount = await User.countDocuments({});
+        var interfaceCount = await Commit.countDocuments({});
+        var serviceCount = await Email.countDocuments({});
+    } catch (err) {
+        return res.json({
+            code: 500,
+            msg: err.message || '获取信息失败!'
         });
+    }
+
+    res.json({
+        code: 200,
+        msg: '获取信息成功!',
+        user: info.toObject(),
+        userCount,
+        interfaceCount,
+        serviceCount
     });
 }

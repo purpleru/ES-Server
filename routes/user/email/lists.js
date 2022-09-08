@@ -2,7 +2,7 @@ const { Email, EmailJoiSchema } = require('../../../mongo/models/Email');
 const Joi = require('joi');
 const validateQueryJoi = Joi.object({
     currentPage: Joi.number().required().min(1).messages({
-        'any.required': '缺少当前页码数参数'
+        'any.required': '缺少当前页码参数'
     }),
     pageSize: Joi.number().default(5).min(5).max(50)
 });
