@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
     try {
         var info = await User.findById(userInfo._id, '-password');
         var userCount = await User.countDocuments({});
-        var interfaceCount = await Commit.countDocuments({});
+        var interfaceCount = await Commit.countDocuments({ user: userInfo._id });
         var serviceCount = await Email.countDocuments({});
     } catch (err) {
         return res.json({
