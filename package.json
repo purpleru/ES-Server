@@ -1,13 +1,22 @@
 {
-  "name": "EmailService",
+  "name": "es-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "这是邮件服务接口（EmailService）项目的服务端代码，它包含了EmailService所有接口的实现！",
+  "main": "./app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "es-server",
+    "ES-Server",
+    "email-service",
+    "EmailService",
+    "emailservice"
+  ],
+  "author": {
+    "name": "孤独的小丑",
+    "email": "3072953029@qq.com"
+  },
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
