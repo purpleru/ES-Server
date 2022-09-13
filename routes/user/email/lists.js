@@ -30,7 +30,7 @@ module.exports = async function (req, res, next) {
 
         var total = Math.ceil(count / pageSize);
 
-        currentPage = currentPage > total ? total : currentPage;
+        currentPage = currentPage > total ? (total <= 0 ? total + 1 : total) : currentPage;
 
         var start = (currentPage - 1) * pageSize;
 
